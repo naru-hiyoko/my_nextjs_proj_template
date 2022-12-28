@@ -27,8 +27,8 @@ export default function Home() {
 
   return (
     <>
-      <TextField onChange={handleTextFieldChange}/>
-      <Button onClick={handleButtonClick} >
+      <TextField onChange={handleTextFieldChange} inputProps={{ 'data-testid': 'test-text-field' }}/>
+      <Button onClick={handleButtonClick}  data-testid="test-button" >
         メッセージを表示　
       </Button>
       {/**
