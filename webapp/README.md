@@ -6,14 +6,38 @@
 
 ```
 .
-├── components // 再利用可能なコンポーネント
-├── pages // https://nextjs.org/docs/basic-features/pages
-├── lib // pages で記述される操作のうち抽象化した方が良いもの
-├── tests // ユニットテスト用ファイル
-|── next.config.js // nextjs の設定ファイル
-├── tsconfig.json // typescript 設定ファイル
+├── tsconfig.json // // typescript 設定ファイル
 ├── jest.config.js // jest 設定ファイル
-├── jest.setup.js // jest.config.js から参照される
+├── jest.setup.js // jest.config.js から参照される (`mysql2` 導入後の unittest のエラーを避けるために必要となった)
+├── next.config.js // nextjs の設定ファイル
+├── package.json
+├── pages // https://nextjs.org/docs/basic-features/pages
+├── components // FE 用 UI コンポーネント
+├── repository // API連携の記述
+├── schemas // リクエストパラメータ検証で使う zod object の記述
+├── types // 型定義
+├── tests
+```
+
+### モジュールエイリアス
+
+* `@webapp` はエイリアスになっている
+* absolute import のために、設定ファイルに下記の変更を与えている
+  * `import * from "@webapp/hogehoge"` の記述とするため
+
+```
+# jest.config.js
+moduleNameMapper: {
+  "^@webapp/(.*)$": "<rootDir>/$1",
+}
+```
+
+```
+# tsconfig.js
+"baseUrl": "./",
+"paths": {
+  "@webapp/*": ["*"]
+}
 ```
 
 ## 依存関係のインストール
