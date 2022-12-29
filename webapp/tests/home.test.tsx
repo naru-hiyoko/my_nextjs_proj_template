@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import fireEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import Home from "@webapp/pages/home";
+import { postHello } from "@webapp/repository/frontend/hello";
 
 // NOTE: See, https://jestjs.io/docs/mock-functions#mocking-partials
 jest.mock("@webapp/repository/frontend/hello", () => {
@@ -18,8 +19,19 @@ jest.mock("@webapp/repository/frontend/hello", () => {
   }
 });
 
+const mockedPostHello = jest.mocked(postHello);
+
 describe("test home page", () => {
   it("renders page.", async () => {
+    // NOTE: See, https://jestjs.io/docs/mock-function-api#jestmockedsource-options
+    mockedPostHello.mockImplementation(async (params) => {
+      expect(params).toStrictEqual({
+        yearMonth: "2000-01",
+      })
+      const respParams: PostHelloRespParamsType =  { receivedYearMonth: "2000-01", currentYearMonth: "2022-02" };
+      return [true, respParams]
+    });
+
     render(
       <Home />
     );

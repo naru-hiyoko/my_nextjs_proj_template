@@ -1,17 +1,3 @@
-type PostHelloReqParamsType = {
-  yearMonth: string,
-}
-
-type PostHelloRespParamsType = {
-  yearMonth: string,
-  receivedMonth: string,
-}
-
-type ErrorRespParamsType = {
-  name: string,
-  message: string,
-}
-
 export const postHello = async (params: PostHelloReqParamsType): Promise<[boolean, PostHelloRespParamsType | string]> => {
   const resp = await fetch('/api/hello', {
     method: "POST",
